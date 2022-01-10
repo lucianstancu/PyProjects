@@ -1,0 +1,60 @@
+{"intents": [
+        {"tag": "greeting",
+         "patterns": ["Hi there", "How are you", "Is anyone there?","Hey","Hola", "Hello", "Good day"],
+         "responses": ["Hello, thanks for asking", "Good to see you again", "Hi there, how can I help?"],
+         "context": [""]
+        },
+        {"tag": "goodbye",
+         "patterns": ["Bye", "See you later", "Goodbye", "Nice chatting to you, bye", "Till next time", "See ya"],
+         "responses": ["See you!", "Have a nice day", "Bye! Come back again soon."],
+         "context": [""]
+        },
+        {"tag": "thanks",
+         "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks", "Thanks for helping me"],
+         "responses": ["Happy to help!", "Any time!", "My pleasure"],
+         "context": [""]
+        },
+
+        {"tag": "options",
+         "patterns": ["How can you help me?", "What can you do?", "What help you provide?", "How can you be helpful?", "What support do you offer?"],
+         "responses": ["I can guide you through the world of programming", "Offering support to choose the best suited programming language", "Give you advices about programming"],
+         "context": [""]
+        },
+        {"tag": "programming",
+         "patterns": ["What programming languages exist?", "What are the available programming languages?", "List all programming languages available", "How many programming languages are?" ],
+         "responses": ["There are plenty of programming languages", "The world of programming is wide", "You can choose from a wide range of languages"],
+         "context": [""]
+        },
+        {"tag": "languages",
+         "patterns": ["Tell me a programming language", "Suggest me a programming language", "Advice me what programming language to choose", "Give me an example of programming language", "Can you tell me one?" ],
+         "responses": ["Python", "C", "C++", "Java", "C#", "Javascript"],
+         "context": [""]
+        },
+        {"tag": "jobs",
+         "patterns": ["What job can you get as a programmer?", "What are the available jobs as a programmer?", "Can you give me a job example?", "Tell me one job as a programmer"],
+         "responses": ["DevOps", "Backend", "Frontend", ".Net", "Cyber security"],
+         "context": [""]
+        },
+        {"tag": "companies",
+         "patterns": ["At what company can you work as a programmer?", "What companies hire programmers?", "Give me one of example of company that hire programmers", "Tell me companies where you can work as a programmer"],
+         "responses": ["Amazon", "Facebook", "Microsoft", "Apple", "Google"],
+         "context": [""]
+        },
+        {"tag": "career",
+         "patterns": ["Can you have a good career as a programmer?", "Do programmers have a career?", "How's the career of a programmer", "Tell me about the career as a programmer" ],
+         "responses": ["Programmers have a nice career", "You can have a great career as a programmer", "The career of a programmer is really nice an challenging"],
+         "context": [""]
+        },
+
+        {"tag": "working hours",
+         "patterns": ["How much does a programmer work?", "Are programmers working much?", "How many hours is a programmer working?", "Do the programmers work more than 40 h a week?"],
+         "responses": ["A programmer works 40 h a week", "Typically 40 h a week, but sometimes can be more", "Normally, 40 h a week"],
+         "context": [""]
+        },
+        {"tag": "work-life balance",
+         "patterns": ["Does a programmer have a good work-life balance?", "Are programmers having a good work-life balance?"],
+         "responses": ["Depends on the person", "Yes, they do", "Most of them have!"],
+         "context": [""]
+        }
+    ]
+  }
