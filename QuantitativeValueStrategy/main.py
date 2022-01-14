@@ -11,7 +11,7 @@ from secrets import IEX_CLOUD_API_TOKEN
 stocks = pd.read_csv('stocks/sp_500_stocks.csv')
 
 
-def chunks(lst, n):  # Sparge fisierul csv cu stocks in n liste
+def chunks(lst, n):  
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
 
@@ -21,8 +21,6 @@ symbol_strings = []
 for i in range(0, len(symbol_groups)):
     symbol_strings.append(','.join(symbol_groups[i]))
 
-
-# Calculating the number of shares you need to buy
 
 def portofolio_input():
     global portofolio_size
@@ -91,14 +89,12 @@ for symbol_string in symbol_strings:
                 index=rv_columns),
             ignore_index=True
         )
-# rv_dataframe[rv_dataframe.isnull().any(axis=1)] # returneaza numai randurile cu valori nule
 
-# Missing column data
+
 for column in ['Price-to-Earnings Ratio', 'Price-to-Book Ratio', 'Price-to-Sales Ratio', 'EV/EBITDA', 'EV/GP']:
     rv_dataframe[column].fillna(rv_dataframe[column].mean(), inplace=True)
-    # completeaza cu media coloanei selectate in spatiile unde este N/A
 
-# Calculating Value Percentiles
+
 metrics = {
     'Price-to-Earnings Ratio': 'PE Percentile',
     'Price-to-Book Ratio': 'PB Percentile',
@@ -111,11 +107,6 @@ for metric in metrics:
     for row in rv_dataframe.index:
         rv_dataframe.loc[row, metrics[metric]] = stats.percentileofscore(rv_dataframe[metric],
                                                                          rv_dataframe.loc[row, metric]) / 100
-        # pe randul din coloana selectata introduce scorul randului in raport cu intreaga coloana
-        # stats.percentileofscore[intreaga coloana, valoarea de la rand si coloana]
-
-# Calculating RV Score
-
 
 for row in rv_dataframe.index:
     value_percentiles = []
@@ -123,22 +114,17 @@ for row in rv_dataframe.index:
         value_percentiles.append(rv_dataframe.loc[row, metrics[metric]])
     rv_dataframe.loc[row, 'RV Score'] = mean(value_percentiles)
 
-# ia valoare din fiecare camp din metrics pentru fiecare rand si face media
-
-# Best 50 stocks
 
 rv_dataframe.sort_values('RV Score', ascending=True, inplace=True)
 rv_dataframe = rv_dataframe[:50]
 rv_dataframe.reset_index(drop=True, inplace=True)
 
-# Calculating the number of stocks to buy
 
 portofolio_input()
 position_size = float(portofolio_size) / len(rv_dataframe.index)
 for row in rv_dataframe.index:
     rv_dataframe.loc[row, 'Number of Shares to Buy'] = math.floor(position_size / rv_dataframe.loc[row, 'Price'])
 
-# Formatting our Excel
 
 writer = pd.ExcelWriter('values_strategy.xlsx', engine='xlsxwriter')
 rv_dataframe.to_excel(writer, sheet_name='Value Strategy', index=False)

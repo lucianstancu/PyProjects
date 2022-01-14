@@ -13,7 +13,6 @@ from django.utils.encoding import force_bytes, force_text
 from . tokens import generate_token
 
 
-# Create your views here.
 
 def home(request):
     return render(request, "authentication/index.html")
@@ -27,46 +26,44 @@ def signup(request):
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
         
-        #verifies if the username exists
+        
         if User.objects.filter(username=username):
             messages.error(request, "Username already exists! Try another username")
             return redirect('home')
 
-        #verifies if the email is already registred
+        
         if User.objects.filter(email=email):
             messages.error(request, "Email already registred!")
             return redirect('home')
 
-        #checks the length of the username
+        
         if len(username)>10:
             messages.error(request, "Username too long!")
         
-        #checks the confirmation of password
+        
         if pass1 != pass2:
             messages.error(request, "Passwords didn't match!")
 
-        #checks if the username is numbers only
+        
         if not username.isalnum():
             messages.error(request, "Username must contain only numbers")
 
-        # creates user object with username, email, password
+        
         myuser = User.objects.create_user( username, email, pass1)
-        myuser.first_name = fname  # assigns first name to user object
-        myuser.last_name = lname   # assigns first name to user object
+        myuser.first_name = fname  
+        myuser.last_name = lname   
         myuser.is_active = False
         myuser.save()
 
         messages.success(request, "Your account has been successfully created")
 
-        # Email send to new created account
 
         subject = "Welcome to Virtutii Residence!"
         message = "Hello" + myuser.first_name + "!\n" + "Thank you for visiting our website\n" + "Please confirm your email address in order to activate your account"
         from_email = settings.EMAIL_HOST_USER
         to_list = [myuser.email]
         send_mail(subject, message, from_email, to_list, fail_silently=True)
-        
-        # Email address confirmation email
+       
 
         current_site = get_current_site(request)
         email_subject = "Confirm your email @ Virtutii Residence Login"
@@ -96,7 +93,6 @@ def signin(request):
         username = request.POST['username']
         pass1 = request.POST['pass1']
 
-        #authentification based on the 2 arguments 
         user = authenticate(username=username, password=pass1)
 
         if user is not None:
