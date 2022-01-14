@@ -6,7 +6,7 @@ import math
 from scipy import stats
 from statistics import mean
 from secrets import IEX_CLOUD_API_TOKEN
-
+ 
 
 stocks = pd.read_csv('stocks/sp_500_stocks.csv')
 
