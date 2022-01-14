@@ -7,7 +7,7 @@ import random
 import json
 import pickle
 
-stemmer = LancasterStemmer()  # stemmer using Lancaster method
+stemmer = LancasterStemmer()  
 bot_name = "BOT"
 
 with open("intents.json") as file:
