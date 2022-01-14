@@ -21,7 +21,7 @@ with open("intents.json") as file:
 
     for intent in data["intents"]:
         for pattern in intent["patterns"]:
-            wrds = nltk.word_tokenize(pattern)  # tokenize: get all the words in pattern
+            wrds = nltk.word_tokenize(pattern)  
             words.extend(wrds)
             docs_x.append(wrds)
             docs_y.append(intent["tag"])
@@ -30,8 +30,8 @@ with open("intents.json") as file:
             labels.append(intent["tag"])
 
     words = [stemmer.stem(w.lower()) for w in words if
-             w not in symbols]  # stemming the words using Lancaster method
-    words = sorted(list(set(words)))  # main words list
+             w not in symbols]  
+    words = sorted(list(set(words)))  
     labels = sorted(labels)
 
     training = []
@@ -61,14 +61,8 @@ with open("intents.json") as file:
     with open("data.pickle", "wb") as f:
         pickle.dump((words, labels, training, output), f)
 
-tensorflow.compat.v1.reset_default_graph()  # get rid of previous settings
+tensorflow.compat.v1.reset_default_graph()  
 
-#  Creates a neural network with 4 layers
-#  First layer (input) number of neurons = length of training data set
-#  Second & third layer 8 neurons
-#  Fourth layer (output) number of neurons = length of output data set
-#  softmax gives a probability for each element in the output data set
-#  Apply regression on the neural network
 
 net = tflearn.input_data(shape=[None, len(training[0])])
 net = tflearn.fully_connected(net, 8)
@@ -80,10 +74,8 @@ model = tflearn.DNN(net)
 
 try:
     model.load("model.tflearn")
-    # training the model
 
 except:
-    # n_epoch = how many times sees the same data
     model.fit(training, output, n_epoch=1000, batch_size=8, show_metric=True)
     model.save("model.tflearn")
 
